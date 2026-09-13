@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Level Up Learning | Tutoring & Study Tools</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #fffaf0;
+            color: #242424;
+            line-height: 1.6;
+        }
+
+        header {
+            background: #f6c945;
+            padding: 20px 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+        }
+
+        nav a {
+            color: #242424;
+            text-decoration: none;
+            margin-left: 20px;
+            font-weight: 600;
+        }
+
+        .hero {
+            padding: 90px 8%;
+            text-align: center;
+            background: #fff3c4;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 7vw, 5rem);
+            line-height: 1;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            max-width: 650px;
+            margin: 0 auto 30px;
+            font-size: 1.2rem;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 14px 24px;
+            margin: 6px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 700;
+            background: #242424;
+            color: white;
+        }
+
+        .button.secondary {
+            background: white;
+            color: #242424;
+            border: 2px solid #242424;
+        }
+
+        section {
+            padding: 70px 8%;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.3rem;
+            margin-bottom: 40px;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+        }
+
+        .card h3 {
+            margin-bottom: 10px;
+        }
+
+        .level-up {
+            background: #242424;
+            color: white;
+        }
+
+        .level-up .card {
+            color: #242424;
+        }
+
+        .about {
+            max-width: 800px;
+            margin: auto;
+            text-align: center;
+        }
+
+        footer {
+            background: #111;
+            color: white;
+            text-align: center;
+            padding: 30px;
+        }
+
+        @media (max-width: 700px) {
+            header {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            nav a {
+                margin: 0 7px;
+            }
+
+            .hero {
+                padding: 65px 6%;
+            }
+
+            section {
+                padding: 55px 6%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="logo">LEVEL UP LEARNING 📚</div>
+
+        <nav>
+            <a href="#tutoring">Tutoring</a>
+            <a href="#tools">Study Tools</a>
+            <a href="#about">About</a>
+        </nav>
+    </header>
+
+
+    <main>
+
+        <section class="hero">
+            <h1>K's Study Room.</h1>
+
+            <p>
+                Helping students feel less overwhelmed,
+                more organized, and more confident.
+            </p>
+
+            <a href="#tutoring" class="button">Find a Tutor</a>
+            <a href="#tools" class="button secondary">Shop Study Tools</a>
+        </section>
+
+
+        <section id="tutoring">
+            <h2 class="section-title">📚 Online Tutoring</h2>
+
+            <div class="cards">
+
+                <div class="card">
+                    <h3>Math</h3>
+                    <p>
+                        Homework help, practice, explanations,
+                        and test preparation.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <h3>Reading</h3>
+                    <p>
+                        Build comprehension skills and become
+                        a stronger reader.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <h3>Writing</h3>
+                    <p>
+                        Get help organizing ideas, improving
+                        writing, and understanding assignments.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <h3>Study Skills</h3>
+                    <p>
+                        Learn better ways to study, organize
+                        assignments, and prepare for tests.
+                    </p>
+                </div>
+
+            </div>
+        </section>
+
+
+        <section id="tools">
+            <h2 class="section-title">📝 Study Tools</h2>
+
+            <div class="cards">
+
+                <div class="card">
+                    <h3>Student Planners</h3>
+                    <p>
+                        Stay organized with simple digital
+                        planners made for students.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <h3>Grade Trackers</h3>
+                    <p>
+                        Keep track of assignments, grades,
+                        and academic goals.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <h3>Study Guides</h3>
+                    <p>
+                        Helpful resources designed to make
+                        studying easier.
+                    </p>
+                </div>
+
+            </div>
+        </section>
+
+
+        <section class="level-up">
+
+            <h2 class="section-title">
+                🎯 What Are You Trying to Level Up?
+            </h2>
+
+            <div class="cards">
+
+                <div class="card">
+                    <h3>My Grades 📈</h3>
+                    <p>
+                        Understand your work and improve
+                        your academic performance.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <h3>My Organization 📅</h3>
+                    <p>
+                        Get your assignments, schedule,
+                        and goals under control.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <h3>My Future 🎓</h3>
+                    <p>
+                        Start thinking about college,
+                        careers, and what's next.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <h3>My Money 💰</h3>
+                    <p>
+                        Learn practical money skills and
+                        start building good financial habits.
+                    </p>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <section id="about">
+
+            <div class="about">
+
+                <h2 class="section-title">
+                    💛 Why K's Study Room?
+                </h2>
+
+                <p>
+                    School can be stressful. Level Up Learning
+                    is designed to give students practical,
+                    affordable, and understandable support.
+                </p>
+
+                <br>
+
+                <p>
+                    Whether you need help with homework,
+                    organization, studying, or planning for
+                    your future, the goal is simple:
+                    help you level up.
+                </p>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <footer>
+        <p>© 2026 K's Study Room. All rights reserved.</p>
+        <p>Learn. Grow. Level Up.</p>
+    </footer>
+
+</body>
+</html>
