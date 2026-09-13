@@ -248,10 +248,9 @@
             }
         }
     </style>
-   .dropdown:hover .dropdown-content {
+  .dropdown.open .dropdown-content {
     display: block;
 }
-
 </style>
 </head>
 
@@ -535,6 +534,33 @@
         </p>
 
     </footer>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const dropdowns = document.querySelectorAll(".dropdown");
 
+    dropdowns.forEach(function (dropdown) {
+        const button = dropdown.querySelector(".dropbtn");
+
+        button.addEventListener("click", function (event) {
+            event.stopPropagation();
+
+            dropdowns.forEach(function (otherDropdown) {
+                if (otherDropdown !== dropdown) {
+                    otherDropdown.classList.remove("open");
+                }
+            });
+
+            dropdown.classList.toggle("open");
+        });
+    });
+
+    document.addEventListener("click", function () {
+        dropdowns.forEach(function (dropdown) {
+            dropdown.classList.remove("open");
+        });
+    });
+});
+</script>
+    
 </body>
 </html>
