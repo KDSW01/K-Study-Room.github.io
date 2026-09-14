@@ -842,7 +842,11 @@ function formatTime(time) {
 
 
 function selectBookingSlot(date, startTime, endTime) {
-
+    window.selectedBooking = {
+        date: date,
+        startTime: startTime,
+        endTime: endTime
+    };
     document.getElementById("booking-form-container").style.display = "block";
 
     document.getElementById("selected-slot").innerHTML =
