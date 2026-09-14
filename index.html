@@ -864,7 +864,36 @@ function selectBookingSlot(date, startTime, endTime) {
 
 }
 
+document.getElementById("session-duration").addEventListener("change", function () {
 
+    if (!window.selectedBooking) {
+        return;
+    }
+
+    const selectedMinutes = parseInt(this.value);
+
+    const start = new Date("2000-01-01T" + window.selectedBooking.startTime);
+    const end = new Date("2000-01-01T" + window.selectedBooking.endTime);
+
+    const availableMinutes = (end - start) / 60000;
+
+    const message = document.getElementById("booking-message");
+
+    if (selectedMinutes > availableMinutes) {
+
+        message.textContent =
+            "This session is longer than the available time. Please choose a shorter session.";
+
+        message.style.display = "block";
+
+    } else {
+
+        message.textContent = "";
+        message.style.display = "none";
+
+    }
+
+});
 // Load the available times when the page opens
 loadAvailability();
 </script>
