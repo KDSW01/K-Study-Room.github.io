@@ -218,7 +218,63 @@
         }
 
         /* MOBILE */
+/* BOOKING FORM */
 
+#booking-form-container {
+    margin-top: 35px;
+    padding-top: 30px;
+    border-top: 2px solid #eee;
+}
+
+#booking-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 650px;
+    margin: 0 auto;
+}
+
+#booking-form label {
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+#booking-form input,
+#booking-form select,
+#booking-form textarea {
+    width: 100%;
+    padding: 13px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    font-family: inherit;
+    font-size: 15px;
+    box-sizing: border-box;
+}
+
+#booking-form textarea {
+    resize: vertical;
+}
+
+#booking-form input:focus,
+#booking-form select:focus,
+#booking-form textarea:focus {
+    outline: 2px solid #f2b705;
+    border-color: #f2b705;
+}
+
+#selected-slot {
+    margin: 15px 0;
+    padding: 15px;
+    border-radius: 10px;
+    background: #f8f8f8;
+    font-weight: bold;
+    text-align: center;
+}
+
+#booking-message {
+    text-align: center;
+    font-weight: bold;
+}
         @media (max-width: 700px) {
 
             header {
@@ -430,6 +486,8 @@
 </section>
         <!-- BOOKING -->
 
+<!-- BOOKING -->
+
 <section id="booking">
 
     <h2 class="section-title">📅 Book a Tutoring Session</h2>
@@ -444,6 +502,63 @@
 
         <div id="availability-list">
             <p>Loading available times...</p>
+        </div>
+
+        <div id="booking-form-container" style="display: none;">
+
+            <h3>Complete Your Booking</h3>
+
+            <form id="booking-form">
+
+                <label for="customer-name">Your Name</label>
+                <input
+                    type="text"
+                    id="customer-name"
+                    name="customer_name"
+                    placeholder="Enter your name"
+                    required
+                >
+
+                <label for="customer-email">Email Address</label>
+                <input
+                    type="email"
+                    id="customer-email"
+                    name="customer_email"
+                    placeholder="Enter your email"
+                    required
+                >
+
+                <label for="session-duration">Session Length</label>
+                <select
+                    id="session-duration"
+                    name="duration_minutes"
+                    required
+                >
+                    <option value="">Choose a session length</option>
+                    <option value="30">30 minutes - $10</option>
+                    <option value="45">45 minutes - $12</option>
+                    <option value="60">1 hour - $20</option>
+                    <option value="105">105 minutes - $24</option>
+                </select>
+
+                <label for="booking-notes">Anything you'd like help with?</label>
+                <textarea
+                    id="booking-notes"
+                    name="notes"
+                    placeholder="Tell me what you'd like to work on..."
+                    rows="4"
+                ></textarea>
+
+                <div id="selected-slot"></div>
+
+                <button type="submit" class="button">
+                    Submit Booking Request
+                </button>
+
+                <p id="booking-message"></p>
+
+            </form>
+
         </div>
 
     </div>
