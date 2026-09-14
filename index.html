@@ -894,6 +894,58 @@ document.getElementById("session-duration").addEventListener("change", function 
     }
 
 });
+    document.getElementById("booking-form").addEventListener("submit", async function (event) {
+
+    event.preventDefault();
+
+    const message = document.getElementById("booking-message");
+
+    if (!window.selectedBooking) {
+        message.textContent = "Please select an available tutoring time first.";
+        return;
+    }
+
+    const name = document.getElementById("customer-name").value.trim();
+    const email = document.getElementById("customer-email").value.trim();
+    const duration = parseInt(document.getElementById("session-duration").value);
+    const notes = document.getElementById("booking-notes").value.trim();
+
+    if (!name || !email || !duration) {
+        message.textContent = "Please complete all required fields.";
+        return;
+    }
+
+    const { error } = await supabaseClient
+        .from("bookings")
+        .insert({
+            customer_name: name,
+            customer_email: email,
+            session_date: window.selectedBooking.date,
+            start_time: window.selectedBooking.startTime,
+            end_time: window.selectedBooking.endTime,
+            duration_minutes: duration,
+            status: "pending",
+            notes: notes
+        });
+
+    if (error) {
+
+        console.error("Booking error:", error);
+
+        message.textContent =
+            "Something went wrong while submitting your booking. Please try again.";
+
+        return;
+    }
+
+    message.textContent =
+        "🎉 Your booking request has been submitted!";
+
+    document.getElementById("booking-form").reset();
+
+    window.selectedBooking = null;
+
+});
 // Load the available times when the page opens
 loadAvailability();
 </script>
