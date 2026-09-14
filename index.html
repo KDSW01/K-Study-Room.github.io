@@ -843,15 +843,20 @@ function formatTime(time) {
 
 function selectBookingSlot(date, startTime, endTime) {
 
-    alert(
-        "You selected " +
+    document.getElementById("booking-form-container").style.display = "block";
+
+    document.getElementById("selected-slot").innerHTML =
+        "📅 Selected: " +
         date +
-        " from " +
+        " | " +
         formatTime(startTime) +
-        " to " +
-        formatTime(endTime) +
-        "."
-    );
+        " - " +
+        formatTime(endTime);
+
+    document.getElementById("booking-form-container").scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+    });
 
 }
 
