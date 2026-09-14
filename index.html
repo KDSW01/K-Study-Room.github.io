@@ -649,6 +649,100 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 });
+    // LOAD AVAILABLE BOOKING TIMES
+
+async function loadAvailability() {
+
+    const availabilityList = document.getElementById("availability-list");
+
+    const { data, error } = await supabaseClient
+        .from("availability")
+        .select("*")
+        .eq("is_available", true)
+        .order("available_date", { ascending: true })
+        .order("start_time", { ascending: true });
+
+    if (error) {
+        console.error("Error loading availability:", error);
+        availabilityList.innerHTML =
+            "<p>We couldn't load available times right now. Please try again later.</p>";
+        return;
+    }
+
+    if (!data || data.length === 0) {
+        availabilityList.innerHTML =
+            "<p>No tutoring times are currently available. Check back soon!</p>";
+        return;
+    }
+
+    availabilityList.innerHTML = "";
+
+    data.forEach(slot => {
+
+        const slotDiv = document.createElement("div");
+        slotDiv.className = "booking-slot";
+
+        const date = new Date(slot.available_date + "T00:00:00");
+
+        const formattedDate = date.toLocaleDateString("en-US", {
+            weekday: "long",
+            month: "long",
+            day: "numeric",
+            year: "numeric"
+        });
+
+        const formattedStart = formatTime(slot.start_time);
+        const formattedEnd = formatTime(slot.end_time);
+
+        slotDiv.innerHTML = `
+            <div>
+                <strong>${formattedDate}</strong>
+                <br>
+                ${formattedStart} - ${formattedEnd}
+                ${slot.notes ? `<br><small>${slot.notes}</small>` : ""}
+            </div>
+
+            <button onclick="selectBookingSlot('${slot.available_date}', '${slot.start_time}', '${slot.end_time}')">
+                Book This Time
+            </button>
+        `;
+
+        availabilityList.appendChild(slotDiv);
+    });
+}
+
+
+function formatTime(time) {
+
+    const [hours, minutes] = time.split(":");
+
+    const date = new Date();
+    date.setHours(hours, minutes);
+
+    return date.toLocaleTimeString("en-US", {
+        hour: "numeric",
+        minute: "2-digit"
+    });
+}
+
+
+function selectBookingSlot(date, startTime, endTime) {
+
+    alert(
+        "You selected " +
+        date +
+        " from " +
+        formatTime(startTime) +
+        " to " +
+        formatTime(endTime) +
+        "."
+    );
+
+}
+
+
+// Load the available times when the page opens
+loadAvailability();
 </script>
     
 </body>
