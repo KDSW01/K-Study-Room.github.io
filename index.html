@@ -872,13 +872,13 @@ function selectBookingSlot(date, startTime, endTime) {
     durationSelect.value = "";
     document.getElementById("booking-form-container").style.display = "block";
 
-    document.getElementById("selected-slot").innerHTML =
-        "📅 Selected: " +
-        date +
-        " | " +
-        formatTime(startTime) +
-        " - " +
-        formatTime(endTime);
+   const selectedSlot = document.getElementById("selected-slot");
+
+selectedSlot.innerHTML = `
+    📅 <strong>Selected Time</strong><br>
+    ${date}<br>
+    ${formatTime(startTime)} - ${formatTime(endTime)}
+`;
 
     document.getElementById("booking-form-container").scrollIntoView({
         behavior: "smooth",
