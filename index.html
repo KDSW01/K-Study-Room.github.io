@@ -1797,7 +1797,9 @@ async function loadAdminAvailability() {
 
     data.forEach(slot => {
 
-        const date = new Date(slot.available_date + "T00:00:00");
+        const date = new Date(
+            slot.available_date + "T00:00:00"
+        );
 
         const formattedDate = date.toLocaleDateString("en-US", {
             weekday: "long",
@@ -1813,21 +1815,40 @@ async function loadAdminAvailability() {
 
         item.className = "booking-slot";
 
-        item.innerHTML = `
-            <div>
-                <strong>${formattedDate}</strong>
-                <br>
-                ${formattedStart} - ${formattedEnd}
-                ${slot.notes ? `<br><small>${slot.notes}</small>` : ""}
-            </div>
-        `;
+        const details = document.createElement("div");
+
+        const dateText = document.createElement("strong");
+
+        dateText.textContent = formattedDate;
+
+        details.appendChild(dateText);
+
+        details.appendChild(document.createElement("br"));
+
+        const timeText = document.createTextNode(
+            `${formattedStart} - ${formattedEnd}`
+        );
+
+        details.appendChild(timeText);
+
+        if (slot.notes) {
+
+            details.appendChild(document.createElement("br"));
+
+            const note = document.createElement("small");
+
+            note.textContent = slot.notes;
+
+            details.appendChild(note);
+        }
+
+        item.appendChild(details);
 
         list.appendChild(item);
 
     });
 
 }
-
 
 // LOAD ADMIN AVAILABILITY WHEN PAGE OPENS
 
