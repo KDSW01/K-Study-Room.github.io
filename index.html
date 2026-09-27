@@ -314,6 +314,139 @@
     text-align: center;
     font-weight: bold;
 }
+        /* CALENDAR DESIGN */
+
+.client-calendar-box,
+.calendar-box {
+    max-width: 850px;
+    margin: 30px auto;
+    padding: 25px;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.calendar-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.calendar-header h3 {
+    margin: 0;
+    font-size: 24px;
+}
+
+.calendar-header button {
+    width: 42px;
+    height: 42px;
+    border: none;
+    border-radius: 50%;
+    background: #f2b705;
+    color: #222;
+    font-size: 28px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.calendar-header button:hover {
+    background: #222;
+    color: white;
+}
+
+.calendar-weekdays,
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+}
+
+.calendar-weekdays {
+    margin-bottom: 8px;
+}
+
+.calendar-weekdays div {
+    text-align: center;
+    font-weight: bold;
+    padding: 10px 5px;
+}
+
+.calendar-grid {
+    gap: 6px;
+}
+
+.calendar-day {
+    min-height: 75px;
+    padding: 10px;
+    border: 1px solid #eee;
+    border-radius: 12px;
+    background: #fafafa;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.calendar-day:hover {
+    border-color: #f2b705;
+    transform: translateY(-2px);
+}
+
+.calendar-day.empty {
+    background: transparent;
+    border: none;
+    cursor: default;
+}
+
+.calendar-day.today {
+    border: 2px solid #f2b705;
+}
+
+.calendar-day.available {
+    background: #fff7d6;
+    border: 2px solid #f2b705;
+}
+
+.calendar-day-number {
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.calendar-indicator {
+    display: block;
+    margin-top: 8px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.selected-calendar-date {
+    max-width: 850px;
+    margin: 20px auto;
+    padding: 20px;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
+}
+
+@media (max-width: 700px) {
+
+    .client-calendar-box,
+    .calendar-box {
+        padding: 15px;
+    }
+
+    .calendar-day {
+        min-height: 60px;
+        padding: 7px;
+    }
+
+    .calendar-weekdays div {
+        font-size: 13px;
+    }
+
+    .calendar-day-number {
+        font-size: 14px;
+    }
+
+}
         @media (max-width: 700px) {
 
             header {
