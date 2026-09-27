@@ -1393,6 +1393,55 @@ async function checkAdminStatus() {
 }
 
 checkAdminStatus();
+// ADMIN: ADD AVAILABILITY
+
+document.getElementById("availability-form").addEventListener("submit", async function (event) {
+
+    event.preventDefault();
+
+    const date = document.getElementById("availability-date").value;
+    const startTime = document.getElementById("availability-start").value;
+    const endTime = document.getElementById("availability-end").value;
+    const notes = document.getElementById("availability-notes").value.trim();
+    const message = document.getElementById("availability-message");
+
+    if (endTime <= startTime) {
+        message.textContent =
+            "End time must be after the start time.";
+        return;
+    }
+
+    message.textContent = "Saving...";
+
+    const { error } = await supabaseClient
+        .from("availability")
+        .insert({
+            available_date: date,
+            start_time: startTime,
+            end_time: endTime,
+            is_available: true,
+            notes: notes
+        });
+
+    if (error) {
+
+        console.error("Availability error:", error);
+
+        message.textContent =
+            "Something went wrong. Please try again.";
+
+        return;
+    }
+
+    message.textContent =
+        "✅ Availability added!";
+
+    document.getElementById("availability-form").reset();
+
+    // Refresh the customer booking list
+    loadAvailability();
+
+});
 </script>
     // CHECK OWNER LOGIN
 
