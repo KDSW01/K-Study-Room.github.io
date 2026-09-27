@@ -1008,7 +1008,7 @@
         </form>
 <div id="admin-availability-list">
     <h3>Your Available Times</h3>
-    <p>Loading...</p>
+    <p id="admin-loading-message">Loading...</p>
 </div>
     </div>
 
@@ -1852,7 +1852,9 @@ async function loadAdminAvailability() {
 
 // LOAD ADMIN AVAILABILITY WHEN PAGE OPENS
 
-loadAdminAvailability();
+window.addEventListener("DOMContentLoaded", function () {
+    loadAdminAvailability();
+});
  
     // CHECK OWNER LOGIN
 
