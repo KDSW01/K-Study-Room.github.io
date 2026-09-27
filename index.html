@@ -539,9 +539,39 @@
 
         <h3>Available Sessions</h3>
 
-        <div id="availability-list">
-            <p>Loading available times...</p>
-        </div>
+      <div class="client-calendar-box">
+
+    <div class="calendar-header">
+
+        <button type="button" id="client-previous-month">
+            ‹
+        </button>
+
+        <h3 id="client-calendar-month"></h3>
+
+        <button type="button" id="client-next-month">
+            ›
+        </button>
+
+    </div>
+
+    <div class="calendar-weekdays">
+        <div>Sun</div>
+        <div>Mon</div>
+        <div>Tue</div>
+        <div>Wed</div>
+        <div>Thu</div>
+        <div>Fri</div>
+        <div>Sat</div>
+    </div>
+
+    <div id="client-calendar" class="calendar-grid"></div>
+
+</div>
+
+<div id="client-selected-date" class="selected-calendar-date">
+    <p>Choose a date to see available tutoring times.</p>
+</div>
 
         <div id="booking-form-container" style="display: none;">
 
