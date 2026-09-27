@@ -1445,6 +1445,85 @@ document.getElementById("availability-form").addEventListener("submit", async fu
     loadAvailability();
 
 });
+// ADMIN: LOAD AVAILABILITY
+
+async function loadAdminAvailability() {
+
+    const list = document.getElementById("admin-availability-list");
+
+    if (!list) {
+        return;
+    }
+
+    const { data, error } = await supabaseClient
+        .from("availability")
+        .select("*")
+        .order("available_date", { ascending: true })
+        .order("start_time", { ascending: true });
+
+    if (error) {
+
+        console.error("Admin availability error:", error);
+
+        list.innerHTML = `
+            <h3>Your Available Times</h3>
+            <p>We couldn't load your availability.</p>
+        `;
+
+        return;
+    }
+
+    if (!data || data.length === 0) {
+
+        list.innerHTML = `
+            <h3>Your Available Times</h3>
+            <p>You haven't added any availability yet.</p>
+        `;
+
+        return;
+    }
+
+    list.innerHTML = `
+        <h3>Your Available Times</h3>
+    `;
+
+    data.forEach(slot => {
+
+        const date = new Date(slot.available_date + "T00:00:00");
+
+        const formattedDate = date.toLocaleDateString("en-US", {
+            weekday: "long",
+            month: "long",
+            day: "numeric",
+            year: "numeric"
+        });
+
+        const formattedStart = formatTime(slot.start_time);
+        const formattedEnd = formatTime(slot.end_time);
+
+        const item = document.createElement("div");
+
+        item.className = "booking-slot";
+
+        item.innerHTML = `
+            <div>
+                <strong>${formattedDate}</strong>
+                <br>
+                ${formattedStart} - ${formattedEnd}
+                ${slot.notes ? `<br><small>${slot.notes}</small>` : ""}
+            </div>
+        `;
+
+        list.appendChild(item);
+
+    });
+
+}
+
+
+// LOAD ADMIN AVAILABILITY WHEN PAGE OPENS
+
+loadAdminAvailability();
 </script>
     // CHECK OWNER LOGIN
 
