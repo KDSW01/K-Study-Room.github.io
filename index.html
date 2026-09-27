@@ -1064,6 +1064,68 @@ document.getElementById("signin-form").addEventListener("submit", async function
     console.log("Signed in user:", data.user);
 
 });
+// ACCOUNT DISPLAY
+
+async function updateAccountDisplay() {
+
+    const formContainer = document.getElementById("signin-form-container");
+    const accountInfo = document.getElementById("account-info");
+    const accountEmail = document.getElementById("account-email");
+
+    const { data } = await supabaseClient.auth.getSession();
+
+    if (data.session) {
+
+        formContainer.style.display = "none";
+        accountInfo.style.display = "block";
+
+        accountEmail.textContent =
+            "Signed in as: " + data.session.user.email;
+
+    } else {
+
+        formContainer.style.display = "block";
+        accountInfo.style.display = "none";
+
+    }
+}
+
+
+// UPDATE ACCOUNT WHEN AUTH CHANGES
+
+supabaseClient.auth.onAuthStateChange(() => {
+    updateAccountDisplay();
+});
+
+
+// SIGN OUT
+
+document.getElementById("signout-button").addEventListener("click", async function () {
+
+    const { error } = await supabaseClient.auth.signOut();
+
+    const message = document.getElementById("signout-message");
+
+    if (error) {
+
+        console.error("Sign out error:", error);
+
+        message.textContent =
+            "Something went wrong. Please try again.";
+
+        return;
+    }
+
+    message.textContent = "You have been signed out.";
+
+    updateAccountDisplay();
+
+});
+
+
+// CHECK ACCOUNT WHEN PAGE LOADS
+
+updateAccountDisplay();
 </script>
     // CHECK OWNER LOGIN
 
