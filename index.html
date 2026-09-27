@@ -238,7 +238,46 @@
     font-weight: bold;
     margin-top: 10px;
 }
+/* ACCOUNT FORMS */
 
+#signin-form,
+#signup-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 650px;
+    margin: 0 auto;
+}
+
+#signin-form label,
+#signup-form label {
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+#signin-form input,
+#signup-form input {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    font-family: inherit;
+    font-size: 15px;
+    box-sizing: border-box;
+    background: white;
+}
+
+#signin-form input:focus,
+#signup-form input:focus {
+    outline: 2px solid #f2b705;
+    border-color: #f2b705;
+}
+
+#signin-form .button,
+#signup-form .button {
+    margin-top: 15px;
+    align-self: center;
+}
 #booking-form input,
 #booking-form select,
 #booking-form textarea {
