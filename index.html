@@ -1273,6 +1273,38 @@ document.getElementById("signup-form").addEventListener("submit", async function
     console.log("New account:", data.user);
 
 });
+// CHECK ADMIN STATUS
+
+async function checkAdminStatus() {
+
+    const { data: { session } } =
+        await supabaseClient.auth.getSession();
+
+    if (!session) {
+        console.log("No user is signed in.");
+        return;
+    }
+
+    const { data, error } = await supabaseClient
+        .from("admin_users")
+        .select("user_id")
+        .eq("user_id", session.user.id)
+        .maybeSingle();
+
+    if (error) {
+        console.error("Admin check error:", error);
+        return;
+    }
+
+    if (data) {
+        console.log("👑 Owner account detected.");
+    } else {
+        console.log("Customer account detected.");
+    }
+
+}
+
+checkAdminStatus();
 </script>
     // CHECK OWNER LOGIN
 
