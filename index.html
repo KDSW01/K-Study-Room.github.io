@@ -972,6 +972,16 @@ document.getElementById("session-duration").addEventListener("change", function 
 // Load the available times when the page opens
 loadAvailability();
 </script>
-    
+    // CHECK OWNER LOGIN
+
+supabaseClient.auth.onAuthStateChange((event, session) => {
+
+    if (session) {
+        console.log("Owner is signed in.");
+    } else {
+        console.log("No owner is signed in.");
+    }
+
+}); 
 </body>
 </html>
