@@ -529,17 +529,18 @@
                 >
 
                 <label for="session-duration">Session Length</label>
-                <select
-                    id="session-duration"
-                    name="duration_minutes"
-                    required
-                >
-                    <option value="">Choose a session length</option>
-                    <option value="30">30 minutes - $10</option>
-                    <option value="45">45 minutes - $12</option>
-                    <option value="60">1 hour - $20</option>
-                    <option value="105">105 minutes - $24</option>
-                </select>
+             <select
+    id="session-duration"
+    name="duration_minutes"
+    required
+    disabled
+>
+    <option value="">Choose a session length</option>
+    <option value="30">30 minutes - $10</option>
+    <option value="45">45 minutes - $12</option>
+    <option value="60">1 hour - $20</option>
+    <option value="105">105 minutes - $24</option>
+</select>
 
                 <label for="booking-notes">Anything you'd like help with?</label>
                 <textarea
@@ -847,6 +848,28 @@ function selectBookingSlot(date, startTime, endTime) {
         startTime: startTime,
         endTime: endTime
     };
+        const durationSelect = document.getElementById("session-duration");
+
+    const start = new Date("2000-01-01T" + startTime);
+    const end = new Date("2000-01-01T" + endTime);
+
+    const availableMinutes = (end - start) / 60000;
+
+    durationSelect.disabled = false;
+
+    Array.from(durationSelect.options).forEach(option => {
+
+        if (!option.value) {
+            return;
+        }
+
+        const duration = parseInt(option.value);
+
+        option.disabled = duration > availableMinutes;
+
+    });
+
+    durationSelect.value = "";
     document.getElementById("booking-form-container").style.display = "block";
 
     document.getElementById("selected-slot").innerHTML =
