@@ -1178,9 +1178,12 @@ document.addEventListener("DOMContentLoaded", function () {
 });
     // LOAD AVAILABLE BOOKING TIMES
 
-async function loadAvailability() {
+let clientAvailability = [];
+let clientCalendarDate = new Date();
 
-    const availabilityList = document.getElementById("availability-list");
+clientCalendarDate.setDate(1);
+
+async function loadClientCalendarAvailability() {
 
     const { data, error } = await supabaseClient
         .from("availability")
@@ -1190,55 +1193,18 @@ async function loadAvailability() {
         .order("start_time", { ascending: true });
 
     if (error) {
-        console.error("Error loading availability:", error);
-        availabilityList.innerHTML =
-            "<p>We couldn't load available times right now. Please try again later.</p>";
+        console.error("Calendar availability error:", error);
+
+        document.getElementById("client-selected-date").innerHTML =
+            "<p>We couldn't load available tutoring times right now.</p>";
+
         return;
     }
 
-    if (!data || data.length === 0) {
-        availabilityList.innerHTML =
-            "<p>No tutoring times are currently available. Check back soon!</p>";
-        return;
-    }
+    clientAvailability = data || [];
 
-    availabilityList.innerHTML = "";
-
-    data.forEach(slot => {
-
-        const slotDiv = document.createElement("div");
-        slotDiv.className = "booking-slot";
-
-        const date = new Date(slot.available_date + "T00:00:00");
-
-        const formattedDate = date.toLocaleDateString("en-US", {
-            weekday: "long",
-            month: "long",
-            day: "numeric",
-            year: "numeric"
-        });
-
-        const formattedStart = formatTime(slot.start_time);
-        const formattedEnd = formatTime(slot.end_time);
-
-        slotDiv.innerHTML = `
-            <div>
-                <strong>${formattedDate}</strong>
-                <br>
-                ${formattedStart} - ${formattedEnd}
-                ${slot.notes ? `<br><small>${slot.notes}</small>` : ""}
-            </div>
-
-            <button onclick="selectBookingSlot('${slot.available_date}', '${slot.start_time}', '${slot.end_time}')">
-                Book This Time
-            </button>
-        `;
-
-        availabilityList.appendChild(slotDiv);
-    });
+    renderClientCalendar();
 }
-
-
 function formatTime(time) {
 
     const [hours, minutes] = time.split(":");
@@ -1251,7 +1217,186 @@ function formatTime(time) {
         minute: "2-digit"
     });
 }
+function renderClientCalendar() {
 
+    const calendar = document.getElementById("client-calendar");
+    const monthTitle = document.getElementById("client-calendar-month");
+
+    calendar.innerHTML = "";
+
+    const year = clientCalendarDate.getFullYear();
+    const month = clientCalendarDate.getMonth();
+
+    const monthName = clientCalendarDate.toLocaleDateString("en-US", {
+        month: "long",
+        year: "numeric"
+    });
+
+    monthTitle.textContent = monthName;
+
+    const firstDay = new Date(year, month, 1).getDay();
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+    // Empty spaces before the first day
+    for (let i = 0; i < firstDay; i++) {
+
+        const emptyDay = document.createElement("div");
+
+        emptyDay.className = "calendar-day empty";
+
+        calendar.appendChild(emptyDay);
+    }
+
+    // Create each day
+    for (let day = 1; day <= daysInMonth; day++) {
+
+        const dayButton = document.createElement("button");
+
+        dayButton.type = "button";
+        dayButton.className = "calendar-day";
+
+        const dateString =
+            `${year}-${String(month + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+
+        const slotsForDay = clientAvailability.filter(slot =>
+            slot.available_date === dateString
+        );
+
+        const dayNumber = document.createElement("div");
+
+        dayNumber.className = "calendar-day-number";
+        dayNumber.textContent = day;
+
+        dayButton.appendChild(dayNumber);
+
+        if (slotsForDay.length > 0) {
+
+            dayButton.classList.add("available");
+
+            const indicator = document.createElement("span");
+
+            indicator.className = "calendar-indicator";
+            indicator.textContent = "Available";
+
+            dayButton.appendChild(indicator);
+
+            dayButton.addEventListener("click", function () {
+                selectClientCalendarDate(dateString);
+            });
+
+        } else {
+
+            dayButton.disabled = true;
+
+        }
+
+        // Highlight today
+        const today = new Date();
+
+        if (
+            day === today.getDate() &&
+            month === today.getMonth() &&
+            year === today.getFullYear()
+        ) {
+            dayButton.classList.add("today");
+        }
+
+        calendar.appendChild(dayButton);
+    }
+}
+    function selectClientCalendarDate(dateString) {
+
+    const selectedDateBox =
+        document.getElementById("client-selected-date");
+
+    const selectedDate = new Date(dateString + "T00:00:00");
+
+    const formattedDate = selectedDate.toLocaleDateString("en-US", {
+        weekday: "long",
+        month: "long",
+        day: "numeric",
+        year: "numeric"
+    });
+
+    const slotsForDay = clientAvailability.filter(slot =>
+        slot.available_date === dateString
+    );
+
+    selectedDateBox.innerHTML = "";
+
+    const title = document.createElement("h3");
+
+    title.textContent = formattedDate;
+
+    selectedDateBox.appendChild(title);
+
+    const instruction = document.createElement("p");
+
+    instruction.textContent =
+        "Choose an available time:";
+
+    selectedDateBox.appendChild(instruction);
+
+    slotsForDay.forEach(slot => {
+
+        const slotBox = document.createElement("div");
+
+        slotBox.className = "booking-slot";
+
+        const timeInfo = document.createElement("div");
+
+        timeInfo.innerHTML = `
+            <strong>
+                ${formatTime(slot.start_time)} -
+                ${formatTime(slot.end_time)}
+            </strong>
+        `;
+
+        slotBox.appendChild(timeInfo);
+
+        const chooseButton = document.createElement("button");
+
+        chooseButton.type = "button";
+        chooseButton.textContent = "Choose This Time";
+
+        chooseButton.addEventListener("click", function () {
+
+            selectBookingSlot(
+                slot.available_date,
+                slot.start_time,
+                slot.end_time
+            );
+
+        });
+
+        slotBox.appendChild(chooseButton);
+
+        selectedDateBox.appendChild(slotBox);
+
+    });
+
+}document.getElementById("client-previous-month")
+    .addEventListener("click", function () {
+
+        clientCalendarDate.setMonth(
+            clientCalendarDate.getMonth() - 1
+        );
+
+        renderClientCalendar();
+
+    });
+
+document.getElementById("client-next-month")
+    .addEventListener("click", function () {
+
+        clientCalendarDate.setMonth(
+            clientCalendarDate.getMonth() + 1
+        );
+
+        renderClientCalendar();
+
+    });
+    loadClientCalendarAvailability();
 
 function selectBookingSlot(date, startTime, endTime) {
     window.selectedBooking = {
