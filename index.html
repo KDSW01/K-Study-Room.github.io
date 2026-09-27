@@ -724,41 +724,61 @@
 
 <section id="signin">
 
-    <h2 class="section-title">🔐 Sign In</h2>
+    <h2 class="section-title">🔐 My Account</h2>
 
     <p class="section-subtitle">
-        Sign in to your K's Study Room account.
+        Manage your K's Study Room account.
     </p>
 
     <div class="booking-box">
 
-        <form id="signin-form">
+        <div id="signin-form-container">
 
-            <label for="signin-email">Email Address</label>
+            <form id="signin-form">
 
-            <input
-                type="email"
-                id="signin-email"
-                placeholder="Enter your email"
-                required
+                <label for="signin-email">Email Address</label>
+                <input
+                    type="email"
+                    id="signin-email"
+                    placeholder="Enter your email"
+                    required
+                >
+
+                <label for="signin-password">Password</label>
+                <input
+                    type="password"
+                    id="signin-password"
+                    placeholder="Enter your password"
+                    required
+                >
+
+                <button type="submit" class="button">
+                    Sign In
+                </button>
+
+                <p id="signin-message"></p>
+
+            </form>
+
+        </div>
+
+        <div id="account-info" style="display: none; text-align: center;">
+
+            <h3>Welcome back! 👋🏾</h3>
+
+            <p id="account-email"></p>
+
+            <button
+                type="button"
+                class="button"
+                id="signout-button"
             >
-
-            <label for="signin-password">Password</label>
-
-            <input
-                type="password"
-                id="signin-password"
-                placeholder="Enter your password"
-                required
-            >
-
-            <button type="submit" class="button">
-                Sign In
+                Sign Out
             </button>
 
-            <p id="signin-message"></p>
+            <p id="signout-message"></p>
 
-        </form>
+        </div>
 
     </div>
 
